@@ -1,0 +1,28 @@
+# Diretórios gerados automaticamente pelo Next.js e Node.js
+.next/
+node_modules/
+
+# Arquivos de configuração específicos do ambiente local
+package-lock.json
+yarn.lock
+
+# Logs e cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Configurações do VS Code (se usar o editor)
+.vscode/
+
+# Scripts e arquivos auxiliares que não precisam estar no repositório
+start_next.bat
+lista_arquivos.txt
+
+# Pastas públicas que podem ser grandes e não são essenciais no repositório
+public/images/deleted/
