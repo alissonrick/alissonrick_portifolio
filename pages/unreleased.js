@@ -2,28 +2,32 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import projectData from "../data/projectData"; // Importando diretamente os dados
 import { Roboto_Slab } from "next/font/google";
 
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
 
-// Obtém os dados dos projetos do backend antes de renderizar a página
-export async function getServerSideProps(context) {
-    const res = await fetch("http://localhost:3000/api/getProjects");
-    const data = await res.json();
-
-    return { props: { projects: data.projects || [] } };
-}
-
-export default function Unreleased({ projects }) {
+export default function Unreleased() {
     const router = useRouter();
     const { filter } = router.query;
 
-    const [password, setPassword] = useState("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    // 🔹 Garante que projects sempre será um array
+    const allProjects = projectData.projects || [];
+
     const [filteredImages, setFilteredImages] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
+        console.log("📦 Projetos carregados:", allProjects);
+
+        // Verifica se `allProjects` é um array antes de filtrar
+        if (!Array.isArray(allProjects)) {
+            console.error("❌ ERRO: projectData.projects não é um array!", allProjects);
+            return;
+        }
+
         // Verifica se a senha já foi armazenada no localStorage
         const savedAuth = localStorage.getItem("unreleased_auth");
         if (savedAuth === "true") {
@@ -31,17 +35,19 @@ export default function Unreleased({ projects }) {
         }
     }, []);
 
-    // Filtra os projetos com a tag "senha" se o usuário estiver autenticado
     useEffect(() => {
-        if (isAuthenticated) {
-            const filtered = projects.filter(img =>
-                img.tags.includes("senha") && (!filter || img.tags.includes(filter))
-            );
-            setFilteredImages(filtered);
-        }
-    }, [isAuthenticated, filter, projects]);
+        if (!isAuthenticated) return;
 
-    // Manipula o envio da senha e armazena no localStorage
+        let filtered = allProjects.filter(img => img.tags.includes("senha"));
+
+        if (filter) {
+            filtered = filtered.filter(img => img.tags.includes(filter));
+        }
+
+        setFilteredImages(filtered);
+    }, [filter, isAuthenticated]);
+
+    // 🔐 Verifica a senha e autentica o usuário
     const handlePasswordSubmit = (e) => {
         e.preventDefault();
         if (password === "art") {
@@ -55,7 +61,8 @@ export default function Unreleased({ projects }) {
 
     return (
         <div className={`${robotoSlab.className} w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center`}>
-            {/* Tela de bloqueio para pedir senha */}
+
+            {/* 🔒 Tela de autenticação */}
             {!isAuthenticated ? (
                 <div className="mt-20 flex flex-col items-center bg-[#f5f5f5] p-10 rounded-lg shadow-lg">
                     <h2 className="text-[24px] font-bold text-[#333] mb-4">🔒 Restricted Access</h2>
@@ -80,19 +87,17 @@ export default function Unreleased({ projects }) {
                     <div className="w-[80%] min-w-[70%] max-w-[1200px] mx-auto">
 
                         {/* **Cabeçalho atualizado para ser idêntico ao da Index** */}
-                        <header className="w-[80%] min-w-[70%] h-[100px] flex justify-between items-center px-6 bg-[#ced6db] mt-[50px] mx-auto">
-                            {/* Nome e Slogan alinhados à esquerda */}
+                        <header className="w-[80%] min-w-[70%] h-[100px] flex flex-col sm:flex-row justify-between items-center px-6 bg-[#ced6db] mt-[50px] mx-auto">
                             <div className="text-left">
                                 <h1 className="text-[50px] font-bold leading-none mb-[10px]">Alisson Ricardo</h1>
                                 <p className={`text-[25px] ${filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
-                                    Unreleased Projects {filter ? ` - ${filter}` : ""}
+                                    {projectData.slogans[filter] || projectData.slogans[""] || "Unreleased Projects"}
                                 </p>
                             </div>
 
-                            {/* Menu sempre à direita, nunca quebra */}
+                            {/* Menu igual ao Index */}
                             <nav className="flex gap-x-12">
-                                <Link href={`/${filter ? `?filter=${filter}` : ""}`}
-                                    className={`text-[20px] ${!filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                                <Link href="/" className={`text-[20px] ${!filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                                     Home
                                 </Link>
                                 <Link href={`/unreleased${filter ? `?filter=${filter}` : ""}`}
@@ -124,7 +129,7 @@ export default function Unreleased({ projects }) {
                                         </Link>
                                     ))
                                 ) : (
-                                    <p className="text-center text-[20px] text-[#6d6d6d] mt-10">No projects found.</p>
+                                    <p className="text-center text-[20px] text-[#6d6d6d] mt-10">Nenhum projeto encontrado.</p>
                                 )}
                             </div>
                         </div>
