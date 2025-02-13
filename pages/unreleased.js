@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import projectData from "../data/projectData"; // Importando diretamente os dados
+import projectData from "../data/projectData";
 import { Roboto_Slab } from "next/font/google";
 
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
@@ -11,54 +11,46 @@ export default function Unreleased() {
     const router = useRouter();
     const { filter } = router.query;
 
-    // 🔹 Estado para armazenar o filtro aplicado
     const [currentFilter, setCurrentFilter] = useState("");
-
-    // 🔐 Estado para autenticação e projetos filtrados
     const [filteredImages, setFilteredImages] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    // Atualiza o filtro apenas quando a página carrega
+    // 🔍 Aplica o filtro inicial da URL e verifica autenticação
     useEffect(() => {
+        setCurrentFilter(filter || "");
+
         if (typeof window !== "undefined") {
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlFilter = urlParams.get("filter");
-
-            if (urlFilter) {
-                setCurrentFilter(urlFilter);
-            } else {
-                setCurrentFilter("");
-            }
-        }
-
-        // Verifica se a senha já foi armazenada no localStorage
-        const savedAuth = localStorage.getItem("unreleased_auth");
-        if (savedAuth === "true") {
-            setIsAuthenticated(true);
+            const savedAuth = localStorage.getItem("unreleased_auth");
+            setIsAuthenticated(savedAuth === "true"); // 🔐 Garante booleano correto
         }
     }, [filter]);
 
-    // Filtra os projetos protegidos por senha após autenticação
+    // 📦 Filtra apenas projetos protegidos por senha
     useEffect(() => {
         if (!isAuthenticated) return;
 
-        let filtered = projectData.projects.filter(img => img.tags.includes("senha"));
+        let filtered = projectData.projects.filter(img =>
+            img.requiresPassword && !img.deleted // 🔹 Apenas imagens protegidas e não deletadas
+        );
 
         if (currentFilter) {
             filtered = filtered.filter(img => img.tags.includes(currentFilter));
         }
 
+        // 📌 Ordena por `order`
+        filtered.sort((a, b) => (a.order || 0) - (b.order || 0));
+
         setFilteredImages(filtered);
     }, [isAuthenticated, currentFilter]);
 
-    // 🔐 Verifica a senha e autentica o usuário
+    // 🔐 Verifica a senha
     const handlePasswordSubmit = (e) => {
         e.preventDefault();
-        if (password === "art") {
+        if (password.trim().toLowerCase() === "art") {  // 🔹 Evita espaços e diferenciação de maiúsculas/minúsculas
             setIsAuthenticated(true);
-            localStorage.setItem("unreleased_auth", "true"); // Armazena autenticação
+            localStorage.setItem("unreleased_auth", "true"); // 🔐 Armazena autenticação
             setErrorMessage("");
         } else {
             setErrorMessage("Incorrect password. Try again.");
@@ -101,7 +93,7 @@ export default function Unreleased() {
                                 </p>
                             </div>
 
-                            {/* Menu igual ao Index */}
+                            {/* 🔹 Menu igual ao Index */}
                             <nav className="flex gap-x-12">
                                 <Link href={`/${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${!currentFilter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                                     Home
@@ -115,7 +107,7 @@ export default function Unreleased() {
                             </nav>
                         </header>
 
-                        {/* **Grid de imagens centralizado, igual ao Index** */}
+                        {/* 🔹 Grid de Imagens */}
                         <div className="w-[80%] min-w-[70%] mx-auto mt-8 px-8">
                             <div className="grid grid-cols-4 gap-[5px] justify-center">
                                 {filteredImages.length > 0 ? (

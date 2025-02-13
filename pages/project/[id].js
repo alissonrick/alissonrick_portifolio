@@ -145,18 +145,23 @@ export default function ProjectPage({ project }) {
                     onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                 >
-                    {/* Botão de Fechar */}
+                    {/* 🔹 Caixa para botão de fechar e instruções */}
+                    <div className="absolute top-6 flex flex-col items-center z-10">
+                        {/* Texto de Instrução */}
+                        <div className="bg-black bg-opacity-50 rounded-lg px-4 py-2">
+                            <p className="text-white text-lg text-center">
+                                Pinch or scroll to zoom, grab to move
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* 🔹 Botão de Fechar */}
                     <button
                         onClick={() => setFullscreenImage(null)}
-                        className="absolute top-4 right-6 text-white text-4xl z-10"
+                        className="absolute top-4 right-6 text-white text-4xl z-10 bg-black bg-opacity-50 rounded-full px-4 py-2"
                     >
                         ✕
                     </button>
-
-                    {/* Texto de instrução sempre visível */}
-                    <p className="absolute top-8 text-white text-lg z-10">
-                        Pinch or scroll to zoom, grab to move
-                    </p>
 
                     {/* Imagem Expandida */}
                     <div

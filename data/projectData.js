@@ -17,7 +17,10 @@ const projectData = {
                 { src: "/images/imagem1_c.jpg", description: "Variedade de texturas utilizadas." }
             ],
             description: "Este é um projeto de cenário para um jogo estilizado.",
-            tags: ["backgrounds", "characters", "senha"]
+            tags: ["backgrounds", "characters"],
+            order: 1,
+            deleted: false,
+            requiresPassword: false // 🔹 Não precisa de senha
         },
         {
             id: "imagem2",
@@ -25,7 +28,10 @@ const projectData = {
             src: "/images/imagem2.jpg",
             additionalImages: [],
             description: "Um objeto de cena usado em um jogo.",
-            tags: ["props", "senha"]
+            tags: ["props"],
+            order: 2,
+            deleted: false,
+            requiresPassword: false // 🔹 Precisa de senha
         },
         {
             id: "imagem3",
@@ -33,7 +39,10 @@ const projectData = {
             src: "/images/imagem3.jpg",
             additionalImages: [],
             description: "Outro objeto de cena utilizado em um ambiente 3D.",
-            tags: ["props"]
+            tags: ["props"],
+            order: 3,
+            deleted: false,
+            requiresPassword: true
         },
         {
             id: "imagem4",
@@ -41,7 +50,10 @@ const projectData = {
             src: "/images/imagem4.jpg",
             additionalImages: [],
             description: "Mais um cenário estilizado para um jogo.",
-            tags: ["backgrounds"]
+            tags: ["backgrounds"],
+            order: 4,
+            deleted: false,
+            requiresPassword: false
         },
         {
             id: "imagem5",
@@ -49,7 +61,10 @@ const projectData = {
             src: "/images/imagem5.jpg",
             additionalImages: [],
             description: "Um personagem criado para um jogo mobile.",
-            tags: ["characters"]
+            tags: ["characters"],
+            order: 5,
+            deleted: false,
+            requiresPassword: false
         },
         {
             id: "imagem6",
@@ -57,8 +72,24 @@ const projectData = {
             src: "/images/imagem6.jpg",
             additionalImages: [],
             description: "Outro personagem desenvolvido para um jogo.",
-            tags: ["characters"]
+            tags: ["characters"],
+            order: 6,
+            deleted: false,
+            requiresPassword: false
         }
+                ,
+        {
+            id: "carrinhos",
+            title: "Personagem Y",
+            src: "/images/carrinhos.jpg",
+            additionalImages: [],
+            description: "carrinhos pra animação.",
+            tags: ["props"],
+            order: 2.1,
+            deleted: false,
+            requiresPassword: true
+        }
+
     ]
 };
 

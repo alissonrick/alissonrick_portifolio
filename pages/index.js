@@ -11,29 +11,24 @@ export default function Home() {
     const router = useRouter();
     const { filter } = router.query;
     const [currentFilter, setCurrentFilter] = useState("");
-
-    const allProjects = projectData.projects || [];
     const [filteredImages, setFilteredImages] = useState([]);
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlFilter = urlParams.get("filter");
-
-            if (urlFilter) {
-                setCurrentFilter(urlFilter);
-            } else {
-                setCurrentFilter("");
-            }
-        }
+        // 🔍 Define o filtro atual baseado na URL
+        setCurrentFilter(filter || "");
     }, [filter]);
 
     useEffect(() => {
-        let filtered = allProjects.filter(img => !img.tags.includes("senha"));
+        let filtered = projectData.projects.filter(img =>
+            !img.requiresPassword && !img.deleted // 🔹 Filtra imagens que NÃO precisam de senha e não foram deletadas
+        );
 
         if (currentFilter) {
             filtered = filtered.filter(img => img.tags.includes(currentFilter));
         }
+
+        // 📌 Aplica ordenação pelo campo `order`
+        filtered.sort((a, b) => (a.order || 0) - (b.order || 0));
 
         setFilteredImages(filtered);
     }, [currentFilter]);
@@ -41,6 +36,7 @@ export default function Home() {
     return (
         <div className={`${robotoSlab.className} w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center`}>
             <div className="w-[80%] min-w-[70%] max-w-[1200px] mx-auto">
+                {/* 🔹 Cabeçalho */}
                 <header className="w-[80%] min-w-[70%] h-[100px] flex flex-col sm:flex-row justify-between items-center px-6 bg-[#ced6db] mt-[50px] mx-auto">
                     <div className="text-left">
                         <h1 className="text-[50px] font-bold leading-none mb-[10px]">Alisson Ricardo</h1>
@@ -48,6 +44,7 @@ export default function Home() {
                             {projectData.slogans[currentFilter] || projectData.slogans[""] || "Texto Dinâmico"}
                         </p>
                     </div>
+                    {/* 🔹 Menu de Navegação */}
                     <nav className="flex gap-x-12">
                         <Link href={`/${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${!currentFilter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                             Home
@@ -60,6 +57,8 @@ export default function Home() {
                         </Link>
                     </nav>
                 </header>
+
+                {/* 🔹 Grid de Imagens */}
                 <div className="w-[80%] min-w-[70%] mx-auto mt-8 px-8">
                     <div className="grid grid-cols-4 gap-[5px]">
                         {filteredImages.length > 0 ? (
