@@ -7,11 +7,31 @@ import { Roboto_Slab } from "next/font/google";
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
 
 export async function getStaticProps() {
-    const res = await fetch("http://localhost:3000/api/getProjects");
-    const data = await res.json();
+    // Detecta se está rodando localmente ou na Vercel
+    const isLocal = process.env.NODE_ENV === "development";
+    const siteUrl = isLocal
+        ? "http://localhost:3000"
+        : "https://alissonrickportfolio-ega1cfo87-alissonricks-projects.vercel.app";
 
-    return { props: { projects: data.projects || [], slogans: data.slogans || {} } };
+    const apiUrl = `${siteUrl}/api/getProjects`;
+
+    console.log("Usando API URL:", apiUrl); // Para debug
+
+    try {
+        const res = await fetch(apiUrl);
+
+        console.log("Response Status:", res.status); // Mostra o status da resposta
+
+        if (!res.ok) throw new Error(`Erro ao buscar dados da API: ${res.statusText}`);
+
+        const data = await res.json();
+        return { props: { projects: data.projects || [], slogans: data.slogans || {} } };
+    } catch (error) {
+        console.error("Erro ao buscar projetos:", error);
+        return { props: { projects: [], slogans: {} } }; // Retorna valores padrão para evitar falha no build
+    }
 }
+
 
 export default function Home({ projects, slogans }) {
     const router = useRouter();
