@@ -11,21 +11,26 @@ export default function Unreleased() {
     const router = useRouter();
     const { filter } = router.query;
 
-    // 🔹 Garante que projects sempre será um array
-    const allProjects = projectData.projects || [];
+    // 🔹 Estado para armazenar o filtro aplicado
+    const [currentFilter, setCurrentFilter] = useState("");
 
+    // 🔐 Estado para autenticação e projetos filtrados
     const [filteredImages, setFilteredImages] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    // Atualiza o filtro apenas quando a página carrega
     useEffect(() => {
-        console.log("📦 Projetos carregados:", allProjects);
+        if (typeof window !== "undefined") {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlFilter = urlParams.get("filter");
 
-        // Verifica se `allProjects` é um array antes de filtrar
-        if (!Array.isArray(allProjects)) {
-            console.error("❌ ERRO: projectData.projects não é um array!", allProjects);
-            return;
+            if (urlFilter) {
+                setCurrentFilter(urlFilter);
+            } else {
+                setCurrentFilter("");
+            }
         }
 
         // Verifica se a senha já foi armazenada no localStorage
@@ -33,19 +38,20 @@ export default function Unreleased() {
         if (savedAuth === "true") {
             setIsAuthenticated(true);
         }
-    }, []);
+    }, [filter]);
 
+    // Filtra os projetos protegidos por senha após autenticação
     useEffect(() => {
         if (!isAuthenticated) return;
 
-        let filtered = allProjects.filter(img => img.tags.includes("senha"));
+        let filtered = projectData.projects.filter(img => img.tags.includes("senha"));
 
-        if (filter) {
-            filtered = filtered.filter(img => img.tags.includes(filter));
+        if (currentFilter) {
+            filtered = filtered.filter(img => img.tags.includes(currentFilter));
         }
 
         setFilteredImages(filtered);
-    }, [filter, isAuthenticated]);
+    }, [isAuthenticated, currentFilter]);
 
     // 🔐 Verifica a senha e autentica o usuário
     const handlePasswordSubmit = (e) => {
@@ -90,22 +96,20 @@ export default function Unreleased() {
                         <header className="w-[80%] min-w-[70%] h-[100px] flex flex-col sm:flex-row justify-between items-center px-6 bg-[#ced6db] mt-[50px] mx-auto">
                             <div className="text-left">
                                 <h1 className="text-[50px] font-bold leading-none mb-[10px]">Alisson Ricardo</h1>
-                                <p className={`text-[25px] ${filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
-                                    {projectData.slogans[filter] || projectData.slogans[""] || "Unreleased Projects"}
+                                <p className={`text-[25px] ${currentFilter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                                    {projectData.slogans[currentFilter] || projectData.slogans[""] || "Unreleased Projects"}
                                 </p>
                             </div>
 
                             {/* Menu igual ao Index */}
                             <nav className="flex gap-x-12">
-                                <Link href="/" className={`text-[20px] ${!filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                                <Link href={`/${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${!currentFilter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                                     Home
                                 </Link>
-                                <Link href={`/unreleased${filter ? `?filter=${filter}` : ""}`}
-                                    className={`text-[20px] ${filter === "unreleased" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                                <Link href={`/unreleased${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${currentFilter === "unreleased" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                                     Unreleased
                                 </Link>
-                                <Link href={`/about${filter ? `?filter=${filter}` : ""}`}
-                                    className={`text-[20px] ${filter === "about" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                                <Link href={`/about${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${currentFilter === "about" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                                     About
                                 </Link>
                             </nav>

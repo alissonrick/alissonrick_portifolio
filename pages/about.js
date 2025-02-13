@@ -11,29 +11,39 @@ export default function About() {
     const router = useRouter();
     const { filter } = router.query;
 
-    const [filteredExperiences, setFilteredExperiences] = useState([]);
-    const [filteredSkills, setFilteredSkills] = useState([]);
-    const [filteredLanguages, setFilteredLanguages] = useState([]);
+    // Estado para armazenar o filtro aplicado
+    const [currentFilter, setCurrentFilter] = useState("");
 
+    // Atualiza o filtro apenas quando a página carrega
     useEffect(() => {
-        if (filter) {
-            setFilteredExperiences(aboutData.experiences.filter(exp => exp.tags.includes(filter)));
+        if (typeof window !== "undefined") {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlFilter = urlParams.get("filter");
 
-            setFilteredSkills(aboutData.skills.filter(skill =>
-                (skill.tags.includes(filter) || skill.tags.includes("all")) && !skill.tags.includes("languages")
-            ));
-
-            const filteredLangs = aboutData.skills.filter(lang =>
-                lang.tags.includes("languages") && (lang.tags.includes(filter) || filter === "languages" || lang.tags.includes("all"))
-            );
-
-            setFilteredLanguages(filteredLangs.length > 0 ? filteredLangs : aboutData.skills.filter(lang => lang.tags.includes("languages")));
-        } else {
-            setFilteredExperiences(aboutData.experiences);
-            setFilteredSkills(aboutData.skills.filter(skill => !skill.tags.includes("languages")));
-            setFilteredLanguages(aboutData.skills.filter(lang => lang.tags.includes("languages")));
+            if (urlFilter) {
+                setCurrentFilter(urlFilter);
+            } else {
+                setCurrentFilter("");
+            }
         }
     }, [filter]);
+
+    // Filtrando os dados de acordo com o filtro aplicado
+    const filteredExperiences = currentFilter
+        ? aboutData.experiences.filter(exp => exp.tags.includes(currentFilter))
+        : aboutData.experiences;
+
+    const filteredSkills = currentFilter
+        ? aboutData.skills.filter(skill =>
+            (skill.tags.includes(currentFilter) || skill.tags.includes("all")) && !skill.tags.includes("languages")
+        )
+        : aboutData.skills.filter(skill => !skill.tags.includes("languages"));
+
+    const filteredLanguages = currentFilter
+        ? aboutData.skills.filter(lang =>
+            lang.tags.includes("languages") && (lang.tags.includes(currentFilter) || currentFilter === "languages" || lang.tags.includes("all"))
+        )
+        : aboutData.skills.filter(lang => lang.tags.includes("languages"));
 
     return (
         <div className={`${robotoSlab.className} w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center`}>
@@ -45,22 +55,19 @@ export default function About() {
                 <header className="w-[80%] min-w-[70%] h-[100px] flex flex-col sm:flex-row justify-between items-center px-6 bg-[#ced6db] mt-[50px] mx-auto">
                     <div className="text-left">
                         <h1 className="text-[50px] font-bold leading-none mb-[10px]">Alisson Ricardo</h1>
-                        <p className={`text-[25px] ${filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
-                            {aboutData.slogans[filter] || aboutData.slogans[""] || "Texto Dinâmico"}
+                        <p className={`text-[25px] ${currentFilter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                            {aboutData.slogans[currentFilter] || aboutData.slogans[""] || "Texto Dinâmico"}
                         </p>
                     </div>
 
                     <nav className="flex gap-x-12">
-                        <Link href={`/${filter ? `?filter=${filter}` : ""}`}
-                            className={`text-[20px] ${!filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                        <Link href={`/${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${!currentFilter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                             Home
                         </Link>
-                        <Link href={`/unreleased${filter ? `?filter=${filter}` : ""}`}
-                            className={`text-[20px] ${filter === "unreleased" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                        <Link href={`/unreleased${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${currentFilter === "unreleased" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                             Unreleased
                         </Link>
-                        <Link href={`/about${filter ? `?filter=${filter}` : ""}`}
-                            className={`text-[20px] ${filter === "about" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
+                        <Link href={`/about${currentFilter ? `?filter=${currentFilter}` : ""}`} className={`text-[20px] ${currentFilter === "about" ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
                             About
                         </Link>
                     </nav>
