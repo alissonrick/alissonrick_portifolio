@@ -2,54 +2,37 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import projectData from "../data/projectData"; // Importando diretamente os dados
 import { Roboto_Slab } from "next/font/google";
 
 const robotoSlab = Roboto_Slab({ subsets: ["latin"] });
 
-export async function getStaticProps() {
-    // Detecta se está rodando localmente ou na Vercel
-    const isLocal = process.env.NODE_ENV === "development";
-    const siteUrl = isLocal
-        ? "http://localhost:3000"
-        : "https://alissonrickportfolio-ega1cfo87-alissonricks-projects.vercel.app";
-
-    const apiUrl = `${siteUrl}/api/getProjects`;
-
-    console.log("Usando API URL:", apiUrl); // Para debug
-
-    try {
-        const res = await fetch(apiUrl);
-
-        console.log("Response Status:", res.status); // Mostra o status da resposta
-
-        if (!res.ok) throw new Error(`Erro ao buscar dados da API: ${res.statusText}`);
-
-        const data = await res.json();
-        return { props: { projects: data.projects || [], slogans: data.slogans || {} } };
-    } catch (error) {
-        console.error("Erro ao buscar projetos:", error);
-        return { props: { projects: [], slogans: {} } }; // Retorna valores padrão para evitar falha no build
-    }
-}
-
-
-export default function Home({ projects, slogans }) {
+export default function Home() {
     const router = useRouter();
     const { filter } = router.query;
 
-    const [filteredImages, setFilteredImages] = useState(projects || []);
+    // 🔹 Garante que projects sempre será um array
+    const allProjects = projectData.projects || [];
+
+    const [filteredImages, setFilteredImages] = useState([]);
 
     useEffect(() => {
-        if (projects.length > 0) {
-            let filtered = projects.filter(img => !img.tags.includes("senha")); // Remove imagens com senha
+        console.log("📦 Projetos carregados:", allProjects);
 
-            if (filter) {
-                filtered = filtered.filter(img => img.tags.includes(filter)); // Aplica o filtro selecionado
-            }
-
-            setFilteredImages(filtered);
+        // Verifica se `allProjects` é um array antes de filtrar
+        if (!Array.isArray(allProjects)) {
+            console.error("❌ ERRO: projectData.projects não é um array!", allProjects);
+            return;
         }
-    }, [filter, projects]);
+
+        let filtered = allProjects.filter(img => !img.tags.includes("senha"));
+
+        if (filter) {
+            filtered = filtered.filter(img => img.tags.includes(filter));
+        }
+
+        setFilteredImages(filtered);
+    }, [filter]);
 
     return (
         <div className={`${robotoSlab.className} w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center`}>
@@ -63,7 +46,7 @@ export default function Home({ projects, slogans }) {
                     <div className="text-left">
                         <h1 className="text-[50px] font-bold leading-none mb-[10px]">Alisson Ricardo</h1>
                         <p className={`text-[25px] ${filter ? "text-[#dd8e54]" : "text-[#6d6d6d]"}`}>
-                            {slogans[filter] || slogans[""] || "Texto Dinâmico"}
+                            {projectData.slogans[filter] || projectData.slogans[""] || "Texto Dinâmico"}
                         </p>
                     </div>
 
@@ -81,7 +64,6 @@ export default function Home({ projects, slogans }) {
                             About
                         </Link>
                     </nav>
-
                 </header>
 
                 {/* Grid de Imagens */}

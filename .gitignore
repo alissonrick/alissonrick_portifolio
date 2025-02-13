@@ -26,3 +26,4 @@ lista_arquivos.txt
 
 # Pastas públicas que podem ser grandes e não são essenciais no repositório
 public/images/deleted/
+.vercel
