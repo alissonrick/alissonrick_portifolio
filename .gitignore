@@ -23,6 +23,7 @@ Thumbs.db
 # Scripts e arquivos auxiliares que não precisam estar no repositório
 start_next.bat
 lista_arquivos.txt
+subir_git_vercel.bat
 
 # Pastas públicas que podem ser grandes e não são essenciais no repositório
 public/images/deleted/
