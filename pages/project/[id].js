@@ -31,6 +31,9 @@ export default function ProjectPage({ project }) {
                 {"< Back"}
             </div>
 
+            {/* 🔹 Texto Simples Adicionado */}
+            <p className={styles.simpleText}>Click to zoom</p>
+
             {/* 🔹 Imagem Principal */}
             <div className={styles.mainImageContainer}>
                 <Image
@@ -52,8 +55,9 @@ export default function ProjectPage({ project }) {
                             <Image
                                 src={img.src}
                                 alt={img.description}
-                                width={560}
-                                height={350}
+                                layout="responsive"
+                                width={16} // Define a proporção da imagem (exemplo 16:9)
+                                height={9}
                                 className={styles.additionalImage}
                                 onClick={() => setFullscreenImage(img.src)}
                             />
