@@ -1,0 +1,154 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+.aboutPage {
+    width: 100%;
+    min-height: 100vh;
+    color: #6d6d6d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    font-family: 'Roboto Slab', serif;
+}
+
+/* 🔹 Centralização do cabeçalho */
+.header {
+    width: 80%;
+    min-width: 70%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* 🔹 Container geral */
+.aboutContainer {
+    width: 80%;
+    min-width: 70%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 🔹 Layout das colunas */
+.aboutContent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    gap: 50px;
+}
+
+.leftColumn {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+.rightColumn {
+    width: 30%;
+    padding-left: 40px;
+}
+
+/* 🔹 Títulos das seções */
+.sectionTitle {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* 🔹 Perfil */
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profileText {
+    margin-left: 20px;
+    font-size: 18px;
+    text-align: justify;
+}
+
+/* 🔹 Entradas de Experiência e Educação */
+.entry {
+    margin-bottom: 30px;
+}
+
+.entryTitle {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.entryPeriod {
+    font-size: 18px;
+    color: #6d6d6d;
+    margin-bottom: 10px;
+}
+
+.entryDescription {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* 🔹 Lista de Skills e Languages */
+.skillsList {
+    list-style: none;
+    padding: 0;
+}
+
+.skillItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.star {
+    color: #ccc;
+    font-size: 18px;
+}
+
+.filled {
+    color: #dd8e54;
+}
+
+/* 🔹 Responsividade */
+@media (max-width: 768px) {
+    .aboutContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .leftColumn, .rightColumn {
+        width: 100%;
+        padding: 0;
+    }
+
+    .profile {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profileText {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .rightColumn {
+        margin-top: 40px;
+        padding-left: 0;
+    }
+}

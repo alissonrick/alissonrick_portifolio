@@ -1,0 +1,114 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+/* Cabeçalho do site */
+.header {
+    width: 70%; /* Mantém tudo dentro de 70% da largura da tela */
+    max-width: 1200px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centraliza verticalmente */
+    padding: 20px;
+    background-color: #ced6db;
+    margin-top: 50px;
+    font-family: 'Roboto Slab', serif;
+    text-align: center;
+    max-width: 100%; /* Garante que não ultrapasse a largura da tela */
+    box-sizing: border-box;
+}
+
+/* Título principal */
+.title {
+    text-align: left;
+    flex: 1;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .title h1 {
+        font-size: clamp(35px, 5vw, 50px);
+        font-weight: bold;
+        font-family: 'Roboto Slab', serif;
+        margin-bottom: 2px;
+    }
+
+    .title p {
+        font-size: clamp(25px, 3vw, 25px);
+        font-family: 'Roboto Slab', serif;
+        margin-top: -5px;
+    }
+
+/* Menu de navegação */
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    max-width: 100%;
+    box-sizing: border-box;
+    height: auto;
+    position: relative;
+    top: 5px;
+}
+
+/* Links do menu */
+.link, .currentPage {
+    font-size: 22px !important; /* 🔹 Mantém o tamanho fixo */
+    color: #6d6d6d;
+    font-weight: normal;
+    font-family: 'Roboto Slab', serif;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* 🔹 Garante que o link ativo tenha o MESMO tamanho, mudando apenas a cor */
+.currentPage {
+    color: #dd8e54 !important; /* 🔹 Cor do link ativo */
+}
+
+/* 🔹 Efeito hover sem mudar a cor do ativo */
+.link:hover {
+    transform: scale(1.05); /* 🔹 Aumenta ligeiramente o tamanho no hover */
+}
+
+/* 🔹 Rodapé */
+.footer {
+    width: 100%;
+    height: 80px;
+    background-color: #6d6d6d;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto Slab', serif;
+    font-size: 18px;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .nav {
+        margin-top: 50px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .header {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .nav {
+        margin-top: 30px;
+    }
+}

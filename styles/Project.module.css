@@ -1,0 +1,132 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+/* 🔹 Estilização geral da página */
+.projectPage {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ced6db;
+    color: #6d6d6d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    font-family: 'Roboto Slab', serif;
+}
+
+/* 🔹 Botão de voltar */
+.backButton {
+    text-align: center;
+    font-size: 20px;
+    color: #6d6d6d;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* 🔹 Imagem principal */
+.mainImageContainer {
+    width: 80%;
+    min-width: 70%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainImage {
+    border-radius: 10px;
+    border: 1px solid #6d6d6d;
+    cursor: pointer;
+}
+
+/* 🔹 Descrição */
+.description {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* 🔹 Imagens adicionais */
+.additionalImages {
+    width: 80%;
+    min-width: 70%;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.additionalImage {
+    border-radius: 10px;
+    border: 1px solid #6d6d6d;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* 🔹 Modal de Imagem Expandida */
+.fullscreenOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+/* 🔹 Apenas o Container da Imagem em Zoom */
+.fullscreenImageContainer {
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: grab;
+    position: relative;
+    z-index: 5;
+}
+
+/* 🔹 Ajuste correto para a imagem em tela cheia */
+.fullscreenImage {
+    width: auto;
+    height: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    transition: transform 0.2s ease-out;
+}
+
+/* 🔹 Botão de Fechar */
+.closeButton {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 24px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10; /* 🔹 Garante que o botão fique acima da imagem */
+}
+
+/* 🔹 Instruções de Zoom e Arrasto */
+.instructions {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    white-space: nowrap;
+    pointer-events: none; /* 🔹 Garante que não interfira com a interação */
+    z-index: 10; /* 🔹 Mantém as instruções acima da imagem */
+}

@@ -31,7 +31,7 @@ const projectData = {
             tags: ["props"],
             order: 2,
             deleted: false,
-            requiresPassword: false // 🔹 Precisa de senha
+            requiresPassword: false 
         },
         {
             id: "imagem3",

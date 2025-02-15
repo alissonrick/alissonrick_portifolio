@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\AVELL\meu-portfolio2"
+cd /d "C:\Users\AVELL\meu-portfolio3"
 for /f "tokens=5" %%i in ('netstat -ano ^| findstr :300') do taskkill /PID %%i /F
 start "" /b npm run dev
 timeout /t 5 /nobreak >nul

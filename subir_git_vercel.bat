@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\AVELL\meu-portfolio2"  
+cd /d "C:\Users\AVELL\meu-portfolio3"  
 echo Atualizando repositorio...
 git add .
 set /p commitMessage=Digite o nome do commit: 
