@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import projectData from "../data/projectData";
 import Header from "../components/Header";
 import ImageGrid from "../components/ImageGrid";
+import styles from "../styles/Unreleased.module.css"; // Importando o CSS separado
 
 export default function Unreleased() {
     const router = useRouter();
@@ -49,9 +50,9 @@ export default function Unreleased() {
     };
 
     return (
-        <div className="w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center justify-start">
+        <div className="w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center">
             {!isAuthenticated ? (
-                <div className="mt-20 flex flex-col items-center bg-[#f5f5f5] p-10 rounded-lg shadow-lg">
+                <div className={styles.restrictedAccess}>
                     <h2 className="text-[24px] font-bold text-[#333] mb-4">🔒 Restricted Access</h2>
                     <p className="text-[18px] text-[#666] mb-6">Enter the password to access unreleased projects.</p>
                     <form onSubmit={handlePasswordSubmit} className="flex flex-col items-center">
@@ -71,12 +72,9 @@ export default function Unreleased() {
             ) : (
                 <>
                     <Header currentFilter={currentFilter} slogans={projectData.slogans} />
-                    <div className="w-[80%] min-w-[70%] max-w-[1200px] mx-auto">
-                        <ImageGrid images={filteredImages} />
-                    </div>
+                    <ImageGrid images={filteredImages} />
                 </>
             )}
         </div>
     );
-
 }
