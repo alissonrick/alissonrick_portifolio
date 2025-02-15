@@ -49,7 +49,7 @@ export default function Unreleased() {
     };
 
     return (
-        <div className="w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center">
+        <div className="w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center justify-start">
             {!isAuthenticated ? (
                 <div className="mt-20 flex flex-col items-center bg-[#f5f5f5] p-10 rounded-lg shadow-lg">
                     <h2 className="text-[24px] font-bold text-[#333] mb-4">🔒 Restricted Access</h2>
@@ -71,9 +71,12 @@ export default function Unreleased() {
             ) : (
                 <>
                     <Header currentFilter={currentFilter} slogans={projectData.slogans} />
-                    <ImageGrid images={filteredImages} />
+                    <div className="w-[80%] min-w-[70%] max-w-[1200px] mx-auto">
+                        <ImageGrid images={filteredImages} />
+                    </div>
                 </>
             )}
         </div>
     );
+
 }

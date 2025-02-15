@@ -13,6 +13,7 @@ html, body {
     height: 100%;
     background-color: var(--background);
     font-family: 'Roboto Slab', serif !important; /* 🔥 Força a fonte em todo o site */
+    color: #6d6d6d !important;
 }
 
 body {

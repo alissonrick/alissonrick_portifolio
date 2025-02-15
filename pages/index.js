@@ -28,9 +28,12 @@ export default function Home() {
     }, [currentFilter]);
 
     return (
-        <div className="w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center">
+        <div className="w-full min-h-screen bg-[#ced6db] text-[#6d6d6d] flex flex-col items-center justify-start">
             <Header currentFilter={currentFilter} slogans={projectData.slogans} />
-            <ImageGrid images={filteredImages} />
+            <div className="w-[80%] min-w-[70%] max-w-[1200px] mx-auto">
+                <ImageGrid images={filteredImages} />
+            </div>
         </div>
     );
+
 }

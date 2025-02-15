@@ -2,20 +2,18 @@
 
 /* Cabeçalho do site */
 .header {
-    width: 70%; /* Mantém tudo dentro de 70% da largura da tela */
+    width: 80%;
+    min-width: 70%;
     max-width: 1200px;
-    height: auto;
+    margin: 0 auto; /* 🔹 Centraliza horizontalmente */
+    text-align: center;
+    padding: 20px 0;
+    background-color: var(--background);
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Centraliza verticalmente */
-    padding: 20px;
-    background-color: #ced6db;
-    margin-top: 50px;
-    font-family: 'Roboto Slab', serif;
-    text-align: center;
-    max-width: 100%; /* Garante que não ultrapasse a largura da tela */
-    box-sizing: border-box;
+    align-items: center;
 }
+
 
 /* Título principal */
 .title {
