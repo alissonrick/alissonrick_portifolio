@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import projectData from "../../data/projectData";
 import styles from "../../styles/Project.module.css";
@@ -26,21 +26,18 @@ export default function ProjectPage({ project }) {
     return (
         <div className={styles.projectPage}>
 
-            {/* 🔹 Botão de Voltar */}
             <div className={styles.backButton} onClick={() => router.back()}>
                 {"< Back"}
             </div>
 
-            {/* 🔹 Texto Simples Adicionado */}
-            <p className={styles.simpleText}>Click to zoom</p>
+            <p className={styles.simpleText}>Click to full screen</p>
 
-            {/* 🔹 Imagem Principal */}
             <div className={styles.mainImageContainer}>
                 <Image
                     src={project.src}
                     alt={project.title}
                     layout="responsive"
-                    width={16} // Mantém a proporção 16:9 como padrão
+                    width={16}
                     height={9}
                     className={styles.mainImage}
                     onClick={() => setFullscreenImage(project.src)}
@@ -48,7 +45,6 @@ export default function ProjectPage({ project }) {
                 <p className={styles.description}>{project.description}</p>
             </div>
 
-            {/* 🔹 Imagens Adicionais */}
             {project.additionalImages.length > 0 && (
                 <div className={styles.additionalImages}>
                     {project.additionalImages.map((img, index) => (
@@ -68,7 +64,6 @@ export default function ProjectPage({ project }) {
                 </div>
             )}
 
-            {/* 🔹 Componente de Imagem em Tela Cheia */}
             {fullscreenImage && <FullscreenImage src={fullscreenImage} onClose={() => setFullscreenImage(null)} />}
         </div>
     );
