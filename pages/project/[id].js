@@ -39,8 +39,9 @@ export default function ProjectPage({ project }) {
                 <Image
                     src={project.src}
                     alt={project.title}
-                    width={800}
-                    height={450}
+                    layout="responsive"
+                    width={16} // Mantém a proporção 16:9 como padrão
+                    height={9}
                     className={styles.mainImage}
                     onClick={() => setFullscreenImage(project.src)}
                 />
@@ -56,7 +57,7 @@ export default function ProjectPage({ project }) {
                                 src={img.src}
                                 alt={img.description}
                                 layout="responsive"
-                                width={16} // Define a proporção da imagem (exemplo 16:9)
+                                width={16}
                                 height={9}
                                 className={styles.additionalImage}
                                 onClick={() => setFullscreenImage(img.src)}

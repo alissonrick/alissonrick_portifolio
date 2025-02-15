@@ -32,7 +32,6 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .mainImage {
@@ -50,25 +49,24 @@
 
 /* 🔹 Imagens adicionais */
 .additionalImages {
-    width: 80%;
-    min-width: 70%;
     max-width: 800px;
     margin: auto;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    object-fit: contain;
-    width: 100%;
-    height: auto;
 }
 
+/* 🔹 Estilização das imagens adicionais */
 .additionalImage {
     border-radius: 10px;
     border: 1px solid #6d6d6d;
     cursor: pointer;
     margin-bottom: 20px;
+    object-fit: contain; /* Mantém a proporção sem cortes */
+    width: 100%;
 }
+
 
 /* 🔹 Modal de Imagem Expandida */
 .fullscreenOverlay {
